@@ -1,4 +1,4 @@
-# 🔵 Pulse — AI-Powered PR Gatekeeper
+# 🔵 Pulse — AI-Powered PR Gatekeeper yeahhh brushhh it is !!!!
 
 > Pulse is a GitHub App that automatically analyzes every Pull Request using AI — checking intent alignment, security risk, and code quality — then posts a structured decision (APPROVE / WARN / BLOCK) directly on the PR.
 
