@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "@octokit/app": "^14.0.0",
     "@octokit/auth-app": "^8.2.0",
