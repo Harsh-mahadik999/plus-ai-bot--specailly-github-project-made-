@@ -1,275 +1,131 @@
-# 🔵 Pulse — AI-Powered PR Gatekeeper yeahhh brushhh it is !!!! yess
+# Pulse — AI-Powered PR Gatekeeper
 
-> Pulse is a GitHub App that automatically analyzes every Pull Request using AI — checking intent alignment, security risk, and code quality — then posts a structured decision (APPROVE / WARN / BLOCK) directly on the PR.
+Pulse is a GitHub App that reviews pull requests against your product intent and security expectations, then posts a structured result (`APPROVE`, `WARN`, or `BLOCK`) on the PR.
 
----
+## Project Overview
 
-## 🚀 What Pulse Does
+When a PR is opened or updated, Pulse:
 
-When a PR is opened or updated on your repo, Pulse:
+1. Receives a GitHub webhook event
+2. Fetches the PR diff and metadata
+3. Loads `PRODUCT_INTENT.md`
+4. Sends context to AI for analysis
+5. Posts a PR comment with rationale
+6. Updates a GitHub Check Run status
 
-1. **Receives the webhook** from GitHub instantly
-2. **Fetches the actual code diff** — real files, real changes
-3. **Reads your `PRODUCT_INTENT.md`** — your product's goals and rules
-4. **Sends everything to AI** — analyzes alignment + security
-5. **Posts a structured comment** on the PR with full analysis
-6. **Creates a GitHub Check Run** — ✅ green / ⚠️ neutral / ❌ red on the PR
+## Tech Stack
 
----
+- Node.js + Express
+- GitHub App APIs via Octokit
+- OpenRouter for AI analysis
+- TypeScript support (`src/index.ts`)
 
-## 📸 Example Output
-
-```
-🔵 FeaturePulse Analysis
-
-Decision: ❌ BLOCK
-
-Product Intent Alignment: 25%
-Detected Feature: Adds Google Analytics tracking to the app
-- ❌ Conflicts with: "Avoid third-party tracking or analytics"
-- 💡 Recommendation: Consider self-hosted analytics like Plausible or PostHog
-
-Security Risk: 🟡 MEDIUM
-- 🔒 Sensitive modules touched: user tracking, third-party scripts
-- ✅ No vulnerabilities detected
-
-Scope: 1 file(s) changed · +50 / -0 lines
-
-Reasoning: The PR introduces third-party analytics which conflicts with the
-product's privacy-first intent. Security risk is medium due to external scripts.
-
----
-Pulse AI • Override by commenting `/pulse override` (requires admin)
-```
-
----
-
-## 🏗️ How It Works
-
-```
-GitHub Repo
-    │
-    │  PR opened/updated (webhook)
-    ▼
-Pulse Server (Node.js)
-    │
-    ├── 1. Create GitHub Check Run (in progress)
-    ├── 2. Post "analyzing..." comment
-    ├── 3. Fetch PR diff (real files + patches)
-    ├── 4. Load PRODUCT_INTENT.md
-    ├── 5. Send to AI (OpenRouter / GPT-3.5)
-    ├── 6. Apply decision logic (FR-5.1)
-    ├── 7. Post full analysis comment
-    └── 8. Update Check Run (✅ / ⚠️ / ❌)
-```
-
-### Decision Logic
-
-| Condition | Decision |
-|---|---|
-| Security = CRITICAL | BLOCK |
-| Security = HIGH and Intent < 70% | BLOCK |
-| Intent < 50% | BLOCK |
-| Security = MEDIUM or Intent < 80% | WARN |
-| Everything else | APPROVE |
-
----
-
-## 🛠️ Tech Stack
-
-- **Runtime:** Node.js (CommonJS)
-- **Framework:** Express.js
-- **GitHub API:** @octokit/rest
-- **AI:** OpenRouter API (GPT-3.5-turbo)
-- **Auth:** GitHub App JWT + Installation Tokens
-- **Tunnel (dev):** ngrok
-
----
-
-## ⚙️ Setup & Installation
+## Setup and Run
 
 ### Prerequisites
 
-- Node.js v18+
-- A GitHub Account
-- An OpenRouter API key → [openrouter.ai](https://openrouter.ai)
-- ngrok (for local development) → [ngrok.com](https://ngrok.com)
+- Node.js 18+
+- A GitHub account and repository where the app will be installed
+- OpenRouter API key
+- ngrok (for local webhook forwarding)
 
----
-
-### Step 1 — Clone the repo
+### 1) Clone and install
 
 ```bash
-git clone https://github.com/Harsh-mahadik999/pulse-app.git
-cd pulse-app
-```
-
-### Step 2 — Install dependencies
-
-```bash
+git clone https://github.com/Harsh-mahadik999/plus-ai-bot--specailly-github-project-made-.git
+cd plus-ai-bot--specailly-github-project-made-
 npm install
 ```
 
-### Step 3 — Create your `.env` file
+### 2) Configure environment
 
-Create a file called `.env` in the root of the project:
+Create `.env` from `.env.example` and update values:
 
 ```env
 PORT=3000
-GITHUB_APP_ID=your_github_app_id
-GITHUB_WEBHOOK_SECRET=your_webhook_secret
+GITHUB_APP_ID=your_app_id_here
+GITHUB_WEBHOOK_SECRET=your_secret_here
 GITHUB_PRIVATE_KEY_PATH=./private-key.pem
-OPENROUTER_API_KEY=your_openrouter_api_key
+OPENROUTER_API_KEY=your_openrouter_key_here
 PULSE_LICENSE_ENFORCEMENT=false
-PULSE_LICENSE_KEY=your_private_license_key
-PULSE_LICENSE_KEY_SHA256=sha256_hash_of_your_private_license_key
+PULSE_LICENSE_KEY=your_private_license_key_here
+PULSE_LICENSE_KEY_SHA256=sha256_hash_of_the_license_key
 ```
 
-> ⚠️ Never commit your `.env` file. It's already in `.gitignore`.
+> Never commit `.env` or `private-key.pem`.
 
-### Step 4 — Create a GitHub App
+### 3) Create and install GitHub App
 
-1. Go to [github.com/settings/apps/new](https://github.com/settings/apps/new)
-2. Fill in:
-   - **App Name:** anything you like
-   - **Homepage URL:** `http://localhost:3000`
-   - **Webhook URL:** your ngrok URL + `/webhook` (e.g. `https://xxxx.ngrok-free.app/webhook`)
-   - **Webhook Secret:** same value as `GITHUB_WEBHOOK_SECRET` in your `.env`
-3. Set **Permissions:**
-   - Pull requests: **Read & Write**
-   - Checks: **Read & Write**
-   - Contents: **Read**
-4. Subscribe to events: **Pull request**
-5. Click **Create GitHub App**
-6. Note your **App ID** → put in `.env`
-7. Generate a **Private Key** → download and save as `private-key.pem` in project root
+Use <https://github.com/settings/apps/new> and configure:
 
-### Step 5 — Install the GitHub App on your repo
+- **Webhook URL:** `https://<your-ngrok-subdomain>.ngrok-free.app/webhook`
+- **Webhook secret:** same as `GITHUB_WEBHOOK_SECRET`
+- **Permissions:**
+  - Pull requests: Read & Write
+  - Checks: Read & Write
+  - Contents: Read
+- **Events:** Pull request
 
-1. Go to your GitHub App settings
-2. Click **Install App**
-3. Select the repo you want Pulse to analyze
+Install the app on the repository you want Pulse to analyze.
 
-### Step 6 — Create your `PRODUCT_INTENT.md`
+### 4) Define product intent
 
-This is the most important file — it tells Pulse what your product should and shouldn't do:
+Create `PRODUCT_INTENT.md` in the target repository root. Example:
 
-```markdown
+```md
 # Product Intent
 
 ## Core Principles
 - Prioritize user privacy and minimal data collection
 - Avoid third-party tracking or analytics
 - Keep the app fast and lightweight
-
-## What We Are Building
-A privacy-focused SaaS tool for developers.
-
-## What We Are NOT Building
-- No admin dashboards in this phase
-- No social features
 ```
 
-Place this file in the **root of the repo you want Pulse to analyze** (not the Pulse app itself).
+### 5) Start local services
 
-### Step 7 — Start ngrok
+In one terminal:
 
 ```bash
 ngrok http 3000
 ```
 
-Copy the `https://xxxx.ngrok-free.app` URL and update it in your GitHub App webhook settings.
-
-### Step 8 — Start Pulse
+In another terminal (recommended for development):
 
 ```bash
-npx kill-port 3000 && node src/index.js
+npm run dev
 ```
 
-You should see:
-```
-✅ PRODUCT_INTENT.md loaded
-🚀 Pulse server running on port 3000
-```
-
----
-
-## 🧪 Testing
-
-1. Go to your test repo on GitHub
-2. Create a new branch
-3. Make any change (even edit README)
-4. Open a Pull Request
-5. Watch Pulse analyze it in real time!
-
----
-
-## 📁 Project Structure
-
-```
-pulse-app/
-├── src/
-│   └── index.js          # Main server — all the logic
-├── PRODUCT_INTENT.md     # Your product goals (edit this!)
-├── .env                  # Secrets — never commit! (not in repo)
-├── .env.example          # Template for .env
-├── private-key.pem       # GitHub App key — never commit! (not in repo)
-├── package.json
-└── README.md
-```
-
----
-
-## 🔐 Security
-
-- `.env` and `private-key.pem` are in `.gitignore` and never pushed
-- All GitHub API calls use short-lived installation tokens
-- Webhook secret validates all incoming GitHub events
-
-### Runtime License Enforcement (optional)
-
-To protect production usage, you can enforce a runtime license check:
-
-- Set `PULSE_LICENSE_ENFORCEMENT=true`
-- Set `PULSE_LICENSE_KEY` to your private runtime key
-- Set `PULSE_LICENSE_KEY_SHA256` to the SHA-256 hash of that exact key
-
-Example hash generation:
+Production-like run:
 
 ```bash
-node -e "console.log(require('crypto').createHash('sha256').update(process.argv[1]).digest('hex'))" "your_private_license_key"
+npm run build
+npm start
 ```
 
-When enforcement is enabled and the key is invalid (or missing), Pulse exits at startup.
+## Testing the Flow
 
----
+1. Open a test PR in a repository where your GitHub App is installed.
+2. Push a commit to trigger `pull_request` webhook events.
+3. Confirm Pulse posts analysis comments and updates the check run.
 
-## 🗺️ Roadmap
+## Contributing
 
-- [x] Webhook receiver
-- [x] PR diff fetching
-- [x] PRODUCT_INTENT alignment scoring
-- [x] AI analysis (GPT-3.5)
-- [x] GitHub Check Run (✅/⚠️/❌)
-- [x] Structured PR comments
-- [ ] Webhook signature verification
-- [ ] Dependency vulnerability scanning (OSV)
-- [ ] Advisory / Gatekeeper / Auto-Approve modes
-- [ ] `/pulse override` command
-- [ ] Deploy to Railway/Render (permanent URL)
+Contributions are welcome.
 
----
+1. Create a new branch from the latest default branch.
+2. Make focused, reviewable changes.
+3. Run relevant checks locally (`npm run build` at minimum).
+4. Open a pull request with:
+   - What changed
+   - Why it changed
+   - How it was tested
 
-## 👨‍💻 Built By
+## Security Notes
 
-**Harsh Mahadik** — built for hackathon 🚀
+- Keep GitHub App private key and API keys out of source control.
+- Rotate secrets if they are ever exposed.
+- Enable webhook secret validation in all deployments.
 
----
+## License
 
-## 📄 License
-
-This repository is **proprietary** and released under an **All Rights Reserved** license.
-
-See [LICENSE](./LICENSE) for full terms. Unauthorized copying, modification,
-distribution, or commercial use is prohibited without explicit written permission
-from the copyright holder.
+This project is licensed under the [MIT License](./LICENSE).
