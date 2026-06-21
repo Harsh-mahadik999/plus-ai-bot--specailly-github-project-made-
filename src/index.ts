@@ -1,12 +1,46 @@
+// Copyright (c) 2026 Harsh Mahadik. All rights reserved.
 const express = require('express')
 const fs = require('fs')
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
 const { Octokit } = require('@octokit/rest')
 require('dotenv').config()
 
 const app = express()
 app.use(express.json())
+
+// ─── Runtime License Guard (optional) ──────────────────────────────────────────
+function enforceRuntimeLicense() {
+  const enforcementEnabled = process.env.PULSE_LICENSE_ENFORCEMENT === 'true'
+  if (!enforcementEnabled) return true
+
+  const licenseKey = process.env.PULSE_LICENSE_KEY?.trim()
+  const expectedHash = process.env.PULSE_LICENSE_KEY_SHA256?.trim().toLowerCase()
+
+  if (!licenseKey || !expectedHash) {
+    console.error('❌ License enforcement is enabled, but license configuration is missing.')
+    return false
+  }
+
+  if (!/^[a-f0-9]{64}$/.test(expectedHash)) {
+    console.error('❌ PULSE_LICENSE_KEY_SHA256 must be a valid 64-char SHA-256 hex string.')
+    return false
+  }
+
+  const actualHash = crypto.createHash('sha256').update(licenseKey).digest('hex')
+  const isValid =
+    actualHash.length === expectedHash.length &&
+    crypto.timingSafeEqual(Buffer.from(actualHash, 'utf8'), Buffer.from(expectedHash, 'utf8'))
+
+  if (!isValid) {
+    console.error('❌ Invalid runtime license key. Protected mode startup denied.')
+    return false
+  }
+
+  console.log('✅ Runtime license validated.')
+  return true
+}
 
 // ─── Private Key + App ID ────────────────────────────────────────────────────
 let privateKey = fs.readFileSync(process.env.GITHUB_PRIVATE_KEY_PATH, 'utf8')
@@ -318,6 +352,7 @@ app.post('/webhook', async (req, res) => {
 })
 
 const PORT = process.env.PORT || 3000
+if (!enforceRuntimeLicense()) process.exit(1)
 app.listen(PORT, () => {
   console.log(`🚀 Pulse server running on port ${PORT}`)
 })
