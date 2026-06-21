@@ -1,6 +1,6 @@
 # 🔵 Pulse — AI-Powered PR Gatekeeper yeahhh brushhh it is !!!! yess
 
-> Pulse is a GitHub App that automatically analyzes every Pull Request using AI — checking intent alignment, security risk, and code quality — then posts a structured decision (APPROVE / WARN / BLOCK) directly on the PR.
+> Pulse is a GitHub App that automatically analyzes every Pull Request using AI — checking intent alignment, security risk, and code quality — then posts a structured decision (APPROVE / WARN / BLOCK).
 
 ---
 
@@ -100,8 +100,8 @@ Pulse Server (Node.js)
 ### Step 1 — Clone the repo
 
 ```bash
-git clone https://github.com/Harsh-mahadik999/pulse-app.git
-cd pulse-app
+git clone https://github.com/Harsh-mahadik999/plus-ai-bot--specailly-github-project-made-.git
+cd plus-ai-bot--specailly-github-project-made-
 ```
 
 ### Step 2 — Install dependencies
@@ -215,6 +215,7 @@ pulse-app/
 ├── .env.example          # Template for .env
 ├── private-key.pem       # GitHub App key — never commit! (not in repo)
 ├── package.json
+├── LICENSE               # Project license
 └── README.md
 ```
 
@@ -260,9 +261,58 @@ When enforcement is enabled and the key is invalid (or missing), Pulse exits at 
 
 ---
 
-## 👨‍💻 Built By
+## 👥 Contributing
 
-**Harsh Mahadik** — built for hackathon 🚀
+We welcome contributions! Please follow the guidelines below:
+
+### How to Contribute
+
+1. **Open an Issue First**
+   - Check [existing issues](../../issues) to avoid duplicates
+   - Describe the feature, bug, or improvement clearly
+   - Wait for admin review and approval before starting work
+
+2. **Admin Assignment**
+   - After issue approval, the project admin will assign it to you
+   - Admin will confirm the scope and approach
+
+3. **Create Your Feature Branch**
+   - Once assigned, create a new branch from the latest `main`:
+     ```bash
+     git checkout main
+     git pull origin main
+     git checkout -b feature/your-feature-name
+     ```
+   - Use a clear branch naming convention:
+     - `feature/` for new features
+     - `bugfix/` for bug fixes
+     - `docs/` for documentation updates
+     - `refactor/` for code refactoring
+
+4. **Make Your Changes**
+   - Write clean, well-commented code
+   - Follow the existing code style
+   - Test your changes thoroughly
+
+5. **Submit a Pull Request**
+   - Link the PR to the related issue: `Closes #<issue-number>`
+   - Provide a clear description of changes
+   - Wait for code review and approval
+
+6. **Review & Merge**
+   - Address feedback from reviewers
+   - Once approved and all checks pass, your PR will be merged
+
+### Code of Conduct
+
+- Be respectful and constructive
+- Provide thoughtful feedback
+- Help others succeed in their contributions
+- Report any abusive behavior to the maintainers
+
+### Development Setup
+
+See [⚙️ Setup & Installation](#-setup--installation) above for local development instructions.
 
 ---
 
@@ -273,3 +323,17 @@ This repository is **proprietary** and released under an **All Rights Reserved**
 See [LICENSE](./LICENSE) for full terms. Unauthorized copying, modification,
 distribution, or commercial use is prohibited without explicit written permission
 from the copyright holder.
+
+---
+
+## 🤝 Support
+
+- 📧 **Email:** (contact info to be added)
+- 🐛 **Issues:** [GitHub Issues](../../issues)
+- 💬 **Discussions:** [GitHub Discussions](../../discussions)
+
+---
+
+## 👨‍💻 Built By
+
+**Harsh Mahadik** — built for hackathon 🚀
