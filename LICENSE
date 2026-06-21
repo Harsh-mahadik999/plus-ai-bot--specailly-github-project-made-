@@ -1,20 +1,53 @@
+All Rights Reserved
+
 Copyright (c) 2026 Harsh Mahadik
-All rights reserved.
+
+PROPRIETARY AND CONFIDENTIAL
 
 This software and associated documentation files (the "Software") are proprietary
-and confidential.
+and confidential. Unauthorized copying, modification, distribution, or commercial
+use of this Software is strictly prohibited without explicit written permission
+from the copyright holder.
 
-No permission is granted to use, copy, modify, merge, publish, distribute,
-sublicense, sell, lease, or otherwise exploit the Software, in whole or in part,
-in any form or by any means, without prior explicit written permission from the
-copyright holder.
+LICENSE GRANT
 
-Any unauthorized use, reproduction, disclosure, or distribution of this Software
-is strictly prohibited and may result in legal action.
+The copyright holder grants only a limited, non-exclusive, non-transferable,
+revocable license to use this Software solely for personal, non-commercial
+purposes on the condition that the above copyright notice and this license
+notice appear in all copies and derivative works.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT
-HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+PROHIBITED USES
+
+You may NOT:
+- Copy, modify, or create derivative works of this Software
+- Distribute, sublicense, or sell this Software
+- Use this Software for commercial purposes
+- Remove or alter any copyright notices or proprietary markings
+- Reverse engineer, decompile, or disassemble this Software
+- Use this Software as a basis for competitive products
+
+CONTRIBUTIONS
+
+By submitting a pull request or contribution to this repository, you agree that:
+1. You have the right to grant the licenses herein
+2. Your contributions will be under the same license as this project
+3. The copyright holder may use your contributions as they see fit
+4. You will not be compensated for your contributions
+
+DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+CONTACT
+
+For licensing inquiries or to request permission for specific uses, please
+contact the copyright holder.
+
+Harsh Mahadik
+GitHub: https://github.com/Harsh-mahadik999
