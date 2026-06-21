@@ -120,6 +120,9 @@ GITHUB_APP_ID=your_github_app_id
 GITHUB_WEBHOOK_SECRET=your_webhook_secret
 GITHUB_PRIVATE_KEY_PATH=./private-key.pem
 OPENROUTER_API_KEY=your_openrouter_api_key
+PULSE_LICENSE_ENFORCEMENT=false
+PULSE_LICENSE_KEY=your_private_license_key
+PULSE_LICENSE_KEY_SHA256=sha256_hash_of_your_private_license_key
 ```
 
 > ⚠️ Never commit your `.env` file. It's already in `.gitignore`.
@@ -223,6 +226,22 @@ pulse-app/
 - All GitHub API calls use short-lived installation tokens
 - Webhook secret validates all incoming GitHub events
 
+### Runtime License Enforcement (optional)
+
+To protect production usage, you can enforce a runtime license check:
+
+- Set `PULSE_LICENSE_ENFORCEMENT=true`
+- Set `PULSE_LICENSE_KEY` to your private runtime key
+- Set `PULSE_LICENSE_KEY_SHA256` to the SHA-256 hash of that exact key
+
+Example hash generation:
+
+```bash
+node -e "console.log(require('crypto').createHash('sha256').update(process.argv[1]).digest('hex'))" "your_private_license_key"
+```
+
+When enforcement is enabled and the key is invalid (or missing), Pulse exits at startup.
+
 ---
 
 ## 🗺️ Roadmap
@@ -249,4 +268,8 @@ pulse-app/
 
 ## 📄 License
 
-MIT
+This repository is **proprietary** and released under an **All Rights Reserved** license.
+
+See [LICENSE](./LICENSE) for full terms. Unauthorized copying, modification,
+distribution, or commercial use is prohibited without explicit written permission
+from the copyright holder.
